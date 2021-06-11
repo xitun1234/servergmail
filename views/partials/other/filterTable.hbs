@@ -1,0 +1,70 @@
+<section class="form no-padding-bottom">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header d-flex align-items-center">
+                        <h3 class="h4">Thêm Dữ Liêu Vào Kho</h3>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-lg-12 pt-3">
+                                    <div class="form-group">
+                                        <textarea class="form-control" name="" id="listDataKhoDuLieu" rows="12"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 pt-3">
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-block btn-success btn-lg" id="btnStart">Start</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header d-flex align-items-center">
+                        <h3 class="h4">Kết quả</h3>
+                    </div>
+                    <div class="card-close">
+                        <div class="badge badge-pill badge-warning h5 text-light">
+                            <span id="proccessingCurrent">0</span>
+                            /
+                            <span id="proccessingAll">0</span>
+                        </div>
+                    </div>
+                    <div class="card-body" id="resultShow"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+    let btnStart = "#btnStart";
+    let listDataKhoDuLieu = "l#istDataKhoDuLieu";
+    let proccessingCurrent = "#proccessingCurrent";
+    let proccessingAll = "#proccessingAll";
+
+    function getCountAll(){
+        let input = $(listDataKhoDuLieu).val().trim().replace(/^\s*\n/gm, "");
+        if (input){
+            let countInput = input.split('\n');
+            $(proccessingAll).text(countInput.length)
+        }
+        else{
+            $(proccessingAll).text(0)
+        }
+    }
+
+    $(btnStart).click(function(){
+        getCountAll();
+        $(proccessingCurrent).text(0);
+    })
+</script>
