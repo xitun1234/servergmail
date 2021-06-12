@@ -9,7 +9,7 @@ const KhoDuLieuGmailSchema = new Schema({
     fullName: {type:String},
     first_name: {type:String},
     last_name_group: {type:String},
-    
+    status: {type:Boolean},
     isGet: {type: Boolean},
     moTa: {type:String},
     created:{type:Date, default:Date.now}

@@ -203,7 +203,7 @@ router.post('/setkhodulieu', async (req, res) => {
   duLieu.fullName = dataJson[randomIndex].full_name;
   duLieu.first_name = dataJson[randomIndex].first_name;
   duLieu.last_name_group = dataJson[randomIndex].last_name_group;
-
+  duLieu.status = false;
   duLieu.isGet = false;
   //save
   duLieu.save();
@@ -243,7 +243,7 @@ router.get('/getDataGmail&deviceName=:deviceName', async (req, res) => {
   const infoData = await khoDuLieuGmailModel.findOne(
     {
       deviceName: req.params.deviceName,
-      isGet:true,
+      isGet: true,
     },
     {},
     {sort: {_id: -1}}
@@ -281,6 +281,30 @@ router.post('/addAccountGmail', async (req, res) => {
     success: true,
     data: newAccountGmail,
   });
+});
+
+router.post('/updateKhoDuLieu', async (req, res) => {
+  const filter = {username: req.body.username, deviceName: req.body.deviceName, isGet:true};
+  const update = {
+    status: true,
+    moTa: `Đã tạo thành công gmail`,
+  };
+
+  let doc = await khoDuLieuGmailModel.findOneAndUpdate(filter, update, {
+    new: true,
+  });
+
+  if (doc) {
+    res.json({
+      status: 'success',
+      data: doc,
+    });
+  } else {
+    res.json({
+      status: 'fail',
+      data: null,
+    });
+  }
 });
 
 module.exports = router;
