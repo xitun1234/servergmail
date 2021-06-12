@@ -69,7 +69,7 @@ router.post('/export', async(req,res,next) =>{
         pathExcel,
       });
    
-})
+});
 
 
 

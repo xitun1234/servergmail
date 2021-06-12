@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const KhoDuLieuGmailSchema = new Schema({
     username: {type:String},
     password: {type:String},
-
+    deviceName: {type:String},
     phoneNumber: {type:String},
     fullName: {type:String},
     first_name: {type:String},
