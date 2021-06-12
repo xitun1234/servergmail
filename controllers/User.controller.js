@@ -1,5 +1,5 @@
 const userModel = require('../models/UserModel');
-const deviceModel = require('../models/DeviceModel');
+
 const accountModel = require('../models/LazadaAccountModel');
 const checkJWT = require('../middlewares/check-jwt');
 const jwt = require('jsonwebtoken');

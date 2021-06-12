@@ -1,0 +1,173 @@
+<section class="form no-padding-bottom">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header d-flex align-items-center">
+                        <h3 class="h4">Thêm Dữ Liệu Vào Kho</h3>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-lg-12 pt-3">
+                                    <div class="form-group">
+                                        <textarea class="form-control" name="" id="listDataKhoDuLieu" rows="12"></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-12 pt-3">
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-block btn-success btn-lg" id="btnStart">Bắt Đầu</button>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 pt-3">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-block btn-danger btn-lg" id="btnReset">Reset Kho</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header d-flex align-items-center">
+                        <h3 class="h4">Kết quả</h3>
+                    </div>
+                    <div class="card-close">
+                        <div class="badge badge-pill badge-warning h5 text-light">
+                            <span id="proccessingCurrent">0</span>
+                            /
+                            <span id="proccessingAll">0</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-bold text-success" id="resultShow"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="tables">
+    <div class="container-fluid">
+        {{>table/listKhoDuLieu}}
+    </div>
+</section>
+
+<script>
+    let btnStart = "#btnStart";
+    let listDataKhoDuLieu = "#listDataKhoDuLieu";
+    let proccessingCurrent = "#proccessingCurrent";
+    let proccessingAll = "#proccessingAll";
+    let resultShow = "#resultShow";
+    let btnReset = "#btnReset";
+
+    function getCountAll() {
+        let input = $(listDataKhoDuLieu).val().trim().replace(/^\s*\n/gm, "");
+        if (input) {
+            let countInput = input.split('\n');
+            $(proccessingAll).text(countInput.length)
+        } else {
+            $(proccessingAll).text(0)
+        }
+    }
+
+    $(btnStart).click(function () {
+        getCountAll();
+        $(proccessingCurrent).text(0);
+
+        let listKhoDuLieuCreate = $(listDataKhoDuLieu).val().trim().replace(/^\s*\n/gm, "").split("\n");
+
+        $.each(listKhoDuLieuCreate, function (index, item) {
+            try {
+                let dataParse = item.split("|");
+
+
+                let dataAjax = {
+                    username: dataParse[0],
+                    password: dataParse[1],
+                    
+                }
+                console.log(dataAjax);
+
+                let requestPost = $.ajax({
+                    type: "POST",
+                    url: "../../api/setkhodulieu",
+                    dataType: "json",
+                    contentType: "application/json",
+                    data: JSON.stringify(dataAjax),
+                    success: function (result) {
+                        let resultRender = "";
+                        if (result.success) {
+                            $(resultShow).text(`Đã Thêm Dữ Liệu Vào Kho`);
+                        }
+
+                    }
+                }).always(function () {
+                    let processingCurrentText = Number($(proccessingCurrent).text()) + 1;
+                    $(proccessingCurrent).text(processingCurrentText);
+                })
+            } catch (err) {
+                console.log(err);
+            }
+        })
+    })
+
+    $(btnReset).click(function () {
+        let requestPost = $.ajax({
+            type: "POST",
+            url: "./deleteData",
+            dataType: "json",
+            contentType: "application/json",
+
+            success: function (result) {
+                let resultRender = "";
+                if (result.success) {
+                    $(resultShow).text(`Đã Xoá Toàn Bộ Dữ Liệu Kho`);
+                }
+
+            }
+        })
+    })
+</script>
+<script>
+    $(document).ready(function () {
+
+        $('#tableListKhoDuLieu').DataTable({
+            responsive: true,
+            "lengthMenu": [
+                [ 100,500, 1000, -1],
+                [ 100,500, 1000, "Tất cả"]
+            ],
+  
+            "language": {
+                "lengthMenu": "Hiển thị _MENU_ kết quả",
+                "paginate": {
+                    "first": "Đầu",
+                    "last": "Cuối",
+                    "next": "Tiếp",
+                    "previous": "Trước"
+                },
+                "search": "Tìm kiếm:",
+                "loadingRecords": "Đang tải...",
+                "processing": "Đang xử lý...",
+                "emptyTable": "Không có dữ liệu",
+                "info": "Hiển thị _START_/_END_ (_TOTAL_ kết quả)",
+                "infoEmpty": "Không có dữ liệu để hiển thị",
+                "thousands": ".",
+                "zeroRecords": "Không tìm thấy kết quả tìm kiếm",
+                "infoFiltered": "(lọc từ _MAX_ kết quả)",
+                "aria": {
+                    "sortAscending": ": Sắp xếp tăng dần",
+                    "sortDescending": ": Sắp xếp giảm dần"
+                }
+            }
+        });
+        $("#tableListKhoDuLieu").show()
+    });
+</script>

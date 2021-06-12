@@ -1,6 +1,5 @@
 var express = require('express');
 const router = express.Router();
-const accountModel = require('../../models/LazadaAccountModel');
 const gmailModel = require('../../models/GmailModel');
 const utilsHelper = require('../../utils/UtilsHelper');
 router.use((req, res, next) => {
@@ -18,11 +17,12 @@ router.get('/', async function(req, res) {
         res.render('gmail/account',{
             userData:req.user,
             GmailSlideBarActive:true,
-            gmailSubMenuAccountActive:true,
+            active:{
+              QuanLyGmailLive: true
+            },
             listAccount : result,
             form:{
-
-                limit:req.query.limit || 100,
+                //limit:req.query.limit || 100,
             }
         });
     });
@@ -44,15 +44,13 @@ router.post('/export', async(req,res,next) =>{
         result.forEach((rowExcel) => {
           
           const dataExtract = {
-            'Gmail': rowExcel.gmail+"@gmail.com",
+            'Gmail': rowExcel.username,
             'Mật khẩu': rowExcel.password,
-            'SĐT': rowExcel.phone,
+            'SĐT': rowExcel.phoneNumber,
             'Thiết bị tạo': rowExcel.deviceName,
-            'Họ Tên': rowExcel.fullname,
+            'Họ Tên': rowExcel.fullName,
             'IP': rowExcel.ipAddr,
-            'Restore': rowExcel.isRestore,
             'Backup': rowExcel.isBackUp,
-            'RRSName': "gmail " + rowExcel.gmail,
             'Trạng thái': rowExcel.status
           }
     

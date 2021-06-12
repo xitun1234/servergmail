@@ -5,7 +5,7 @@
         <div class="card">
             <div class="card-header d-flex align-items-center">
                 <h3 class="h4">
-                    Kho Dữ Liệu Cần Sa 420</h3>
+                    Kho Dữ Liệu Gmail</h3>
             </div>
             <div class="card-close">
                 <button class="btn btn-success btn-sm" id="exportExcel">Xuất excel</button>
@@ -19,17 +19,17 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-sm" id="tableListRRS" style="display:none">
+                    <table class="table table-bordered" id="tableListKhoDuLieu" style="display:none">
                         <thead>
                             <th>#</th>
                             <th>Username</th>
                             <th>Password</th>
                             <th>isGet</th>
-                            <th>Trang Thai</th>
+                            <th>Trạng Thái</th>
                
                         </thead>
                         <tbody style="color:black">
-                            {{#each listRRS}}
+                            {{#each listData}}
                             <tr>
                                 <td>
                                     <div class="i-checks">
@@ -43,12 +43,12 @@
 
                                 <td>
                                     {{#if this.isGet}}
-                                    <p class="text-success">Da Lay</p>
+                                    <p class="text-success">Đã Lấy Dữ Liệu</p>
                                     {{ else }}
                                     
                                     {{/if}}
                                 </td>
-                                <td><p class="text-info">{{this.status}}</p></td>
+                                <td><p class="text-info">{{this.moTa}}</p></td>
 
 
                             </tr>

@@ -16,10 +16,10 @@
             <ul class="list-unstyled">
                 <li {{#if dashboardSlideBarActive}} class="active" {{/if}}>
                     <a href="/">
-                        <i class="icon-home"></i>Home
+                        <i class="icon-home"></i>Trang chủ
                     </a>
                 </li>
-                <li>
+                {{!-- <li>
                     <a href="#lazadadropdownDropdown" aria-expanded="false" data-toggle="collapse" class="collapsed">
                         <i class="icon-interface-windows"></i>Lazada
                     </a>
@@ -53,14 +53,19 @@
 
 
                     </ul>
-                </li>
+                </li> --}}
                 <li>
                     <a href="#gmaildropdownDropdown" aria-expanded="false" data-toggle="collapse" class="collapsed">
                         <i class="fa fa-google"></i>Gmail
                     </a>
 
                     <ul id="gmaildropdownDropdown" class="collapse list-unstyled {{#if GmailSlideBarActive}}show{{/if}}">
-                        <li {{#if gmailSubMenuAccountActive}} class="active" {{/if}}>
+                        <li {{#if active.KhoDuLieu}} class="active" {{/if}}>
+                            <a href="/gmail/khoDuLieuGmail/">
+                                <i class="fa fa-database"></i>
+                                Kho Dữ Liệu Gmail</a>
+                        </li>
+                        <li {{#if active.QuanLyGmailLive}} class="active" {{/if}}>
                             <a href="/gmail/account/">
                                 <i class="fa fa-shield"></i>
                                 Quản lý Gmail</a>
@@ -69,54 +74,7 @@
 
                     </ul>
                 </li>
-                <li>
-                    <a href="#telegramdropdownDropdown" aria-expanded="false" data-toggle="collapse" class="collapsed">
-                        <i class="fa fa-telegram"></i>Telegram
-                    </a>
 
-                    <ul id="telegramdropdownDropdown" class="collapse list-unstyled {{#if TelegramSlideBarActive}}show{{/if}}">
-                        <li {{#if telegramSubMenuAccountActive}} class="active" {{/if}}>
-                            <a href="/telegram/account/">
-                                <i class="fa fa-cubes"></i>
-                                Quản lý acc</a>
-                        </li>
-                        <li {{#if telegramSubMenuAccountActive}} class="active" {{/if}}>
-                            <a href="/telegram/buffsub/">
-                                <i class="fa fa-coffee"></i>
-                                Buff Sub Channel</a>
-                        </li>
-
-
-                    </ul>
-                </li>
-                <li>
-                    <a href="#remotedropdownDropdown" aria-expanded="false" data-toggle="collapse" class="collapsed">
-                        <i class="fa fa-television"></i>Điều khiển Máy
-                    </a>
-
-                    <ul id="remotedropdownDropdown" class="collapse list-unstyled {{#if RemoteSlideBarActive}}show{{/if}}">
-                        <li {{#if active.addDevice}} class="active" {{/if}}>
-                            <a href="/remote/addDevice">
-                                <i class="fa fa-mobile"></i>
-                                Thêm thiết bị để điều khiển
-                            </a>
-                        </li>
-                        <li {{#if active.addScript}} class="active" {{/if}}>
-                            <a href="/remote/addScript">
-                                <i class="fa fa-cogs"></i>
-                                Thêm File Auto
-                            </a>
-
-                        </li>
-                        <li {{#if active.manage}} class="active" {{/if}}>
-                            <a href="/remote/manage">
-                                <i class="fa fa-tasks"></i>
-                                Quản lý điều khiển
-                            </a>
-
-                        </li>
-                    </ul>
-                </li>
             </ul>
         </nav>
     </div>
