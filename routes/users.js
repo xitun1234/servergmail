@@ -249,7 +249,7 @@ router.get('/getDataGmail&deviceName=:deviceName', async (req, res) => {
     {
       deviceName: req.params.deviceName,
       isGet: true,
-      status:false
+
     },
     {},
     {sort: {username: -1}}
