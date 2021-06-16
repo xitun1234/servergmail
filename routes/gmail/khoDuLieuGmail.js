@@ -10,7 +10,7 @@ router.use((req, res, next) => {
   });
 
 router.get('/', async (req,res) =>{
-    result = await khoDuLieuModel.find().sort([['username',1]]);
+    result = await khoDuLieuModel.find().sort([['isGet',-1],['username',1]]);
     newConfig = await configModel.find();
     console.log(newConfig[0])
     res.render('gmail/khoDuLieuGmail',{
