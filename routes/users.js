@@ -228,8 +228,27 @@ router.get('/getKhoDuLieu&deviceName=:deviceName', async (req, res) => {
 
   let doc = await khoDuLieuGmailModel.findOneAndUpdate(filter, update, {
     new: true,
-    sort:{username: 1}
+    sort:{_id: 1}
   });
+
+  let newAccountGmail = new gmailModel();
+  newAccountGmail.username = doc.username;
+  newAccountGmail.password = doc.password;
+  newAccountGmail.phoneNumber = doc.phoneNumber;
+  newAccountGmail.deviceName = doc.deviceName;
+  newAccountGmail.fullName = doc.fullName;
+  newAccountGmail.first_name = doc.first_name;
+  newAccountGmail.last_name_group = doc.last_name_group;
+  newAccountGmail.ipAddr = doc.ipAddr;
+  newAccountGmail.status = doc.status;
+  newAccountGmail.isGet = doc.isGet;
+  newAccountGmail.isBackUp = false;
+  newAccountGmail.passwordLZD = doc.passwordLZD;
+
+
+
+
+  newAccountGmail.save();
 
   if (doc) {
     res.json({
@@ -245,14 +264,15 @@ router.get('/getKhoDuLieu&deviceName=:deviceName', async (req, res) => {
 });
 
 router.get('/getDataGmail&deviceName=:deviceName', async (req, res) => {
-  const infoData = await khoDuLieuGmailModel.findOne(
+  const infoData = await gmailModel.findOne(
     {
       deviceName: req.params.deviceName,
       isGet: true,
+      status:false
 
     },
     {},
-    {sort: {username: -1}}
+    {sort: {_id: -1}}
   );
   console.log(infoData)
 

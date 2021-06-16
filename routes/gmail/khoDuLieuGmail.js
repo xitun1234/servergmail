@@ -10,9 +10,9 @@ router.use((req, res, next) => {
   });
 
 router.get('/', async (req,res) =>{
-    result = await khoDuLieuModel.find().sort([['isGet',-1],['username',1]]);
+    result = await khoDuLieuModel.find().sort([['_id',1],['isGet',1]]);
     newConfig = await configModel.find();
-    console.log(newConfig[0])
+    
     res.render('gmail/khoDuLieuGmail',{
         userData: req.user,
         active:{
@@ -20,7 +20,7 @@ router.get('/', async (req,res) =>{
         },
         GmailSlideBarActive:true,
         listData: result,
-        newConfig: newConfig[0]
+        newConfig: newConfig
       
     });
 

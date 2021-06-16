@@ -12,6 +12,7 @@ const GmailSchema = new Schema({
     ipAddr: {type:String},
     status: {type:Boolean},
     isBackUp: {type:Boolean},
+    isGet: {type:Boolean},
     passwordLZD: {type:String},
     isRecovery : {type:Boolean},
     created:{type:Date, default:Date.now}
