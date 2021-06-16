@@ -365,6 +365,7 @@ router.post('/updateRecovery', async (req, res) => {
 
   let doc = await gmailModel.findOneAndUpdate(filter, update, {
     new: true,
+    sort: {_id: -1}
   });
 
   if (doc) {
