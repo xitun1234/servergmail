@@ -281,6 +281,7 @@ router.post('/addAccountGmail', async (req, res) => {
   newAccountGmail.ipAddr = req.body.ipAddr;
   newAccountGmail.status = req.body.status;
   newAccountGmail.isBackUp = false;
+  newAccountGmail.passwordLZD = req.body.passwordLZD;
 
 
   const test = (req.body);
