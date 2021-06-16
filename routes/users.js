@@ -8,6 +8,7 @@ const accountModel = require('../models/LazadaAccountModel');
 const userModel = require('../models/UserModel');
 
 const gmailModel = require('../models/GmailModel');
+const configModel = require('../models/ConfigModel');
 
 const utilsHelper = require('../utils/UtilsHelper');
 const khoDuLieuGmailModel = require('../models/KhoDuLieuGmailModel');
@@ -16,7 +17,7 @@ const fs = require('fs');
 const multer = require('multer');
 const path = require('path');
 const mongoose = require('mongoose');
-const {info} = require('console');
+
 
 const Schema = mongoose.Schema;
 
@@ -175,11 +176,13 @@ async function randomFullname() {
 }
 
 router.post('/setkhodulieu', async (req, res) => {
+  const configLZD = await configModel.find();
   let duLieu = new khoDuLieuGmailModel();
 
   //init
   const username = req.body.username;
   const password = req.body.password;
+  const passwordLZD = configLZD[0].passwordLZD;
   console.log(password);
 
   const fileData = await readFilePro(`${__dirname}/../config/output.json`);
@@ -199,7 +202,7 @@ router.post('/setkhodulieu', async (req, res) => {
   } else {
     duLieu.password = passwordNgauNhien;
   }
-
+  duLieu.passwordLZD = passwordLZD;
   duLieu.fullName = dataJson[randomIndex].full_name;
   duLieu.first_name = dataJson[randomIndex].first_name;
   duLieu.last_name_group = dataJson[randomIndex].last_name_group;
@@ -221,9 +224,11 @@ router.get('/getKhoDuLieu&deviceName=:deviceName', async (req, res) => {
     deviceName: req.params.deviceName,
     moTa: `Đã nạp dữ liệu cho Máy ${req.params.deviceName}`,
   };
+  
 
   let doc = await khoDuLieuGmailModel.findOneAndUpdate(filter, update, {
     new: true,
+    sort:{username: 1}
   });
 
   if (doc) {
@@ -244,10 +249,12 @@ router.get('/getDataGmail&deviceName=:deviceName', async (req, res) => {
     {
       deviceName: req.params.deviceName,
       isGet: true,
+      status:false
     },
     {},
-    {sort: {_id: -1}}
+    {sort: {username: -1}}
   );
+  console.log(infoData)
 
   if (infoData) {
     res.json({
@@ -275,6 +282,12 @@ router.post('/addAccountGmail', async (req, res) => {
   newAccountGmail.status = req.body.status;
   newAccountGmail.isBackUp = false;
 
+
+  const test = (req.body);
+  console.log(test);
+
+
+
   newAccountGmail.save();
 
   res.json({
@@ -291,6 +304,45 @@ router.post('/updateKhoDuLieu', async (req, res) => {
   };
 
   let doc = await khoDuLieuGmailModel.findOneAndUpdate(filter, update, {
+    new: true,
+  });
+
+  if (doc) {
+    res.json({
+      status: 'success',
+      data: doc,
+    });
+  } else {
+    res.json({
+      status: 'fail',
+      data: null,
+    });
+  }
+});
+
+router.post('/updateConfig', async (req, res) => {
+  
+  const update = {
+    passwordLZD: req.body.passwordLZD,
+  };
+  let resultUpdate = await configModel.findOneAndUpdate('', update,{
+    new: true
+  });
+
+
+  res.status(200).json({
+    success: true,
+    data: resultUpdate,
+  });
+});
+
+router.post('/updateRecovery', async (req, res) => {
+  const filter = {username: req.body.username, deviceName: req.body.deviceName};
+  const update = {
+    isRecovery: req.body.isRecovery,
+  };
+
+  let doc = await gmailModel.findOneAndUpdate(filter, update, {
     new: true,
   });
 

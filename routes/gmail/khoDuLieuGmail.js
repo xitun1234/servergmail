@@ -3,14 +3,16 @@ var express = require('express');
 const router = express.Router();
 const gmailModel = require('../../models/GmailModel');
 const khoDuLieuModel = require("../../models/KhoDuLieuGmailModel");
+const configModel = require("../../models/ConfigModel");
 router.use((req, res, next) => {
     if (req.user) { req.owner = req.user.username; } else { req.owner = 'anonymous'; }
     next();
   });
 
 router.get('/', async (req,res) =>{
-    result = await khoDuLieuModel.find();
-
+    result = await khoDuLieuModel.find().sort([['username',1]]);
+    newConfig = await configModel.find();
+    console.log(newConfig[0])
     res.render('gmail/khoDuLieuGmail',{
         userData: req.user,
         active:{
@@ -18,6 +20,7 @@ router.get('/', async (req,res) =>{
         },
         GmailSlideBarActive:true,
         listData: result,
+        newConfig: newConfig[0]
       
     });
 

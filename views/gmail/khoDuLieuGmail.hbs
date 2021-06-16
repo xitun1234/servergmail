@@ -4,6 +4,36 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header d-flex align-items-center">
+                        <h3 class="h4">Set Password Cho Account LZD</h3>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="passwordLZD" aria-describedby="emailHelp" value="{{newConfig.passwordLZD}}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-block btn-success" id="btnConfig">Set</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-bold text-success" id="resultConfig"></p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="form no-padding-bottom">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header d-flex align-items-center">
                         <h3 class="h4">Thêm Dữ Liệu Vào Kho</h3>
                     </div>
                     <div class="card-body">
@@ -66,6 +96,8 @@
     let proccessingAll = "#proccessingAll";
     let resultShow = "#resultShow";
     let btnReset = "#btnReset";
+    let passwordLZD = "#passwordLZD";
+    let btnConfig = "#btnConfig";
 
     function getCountAll() {
         let input = $(listDataKhoDuLieu).val().trim().replace(/^\s*\n/gm, "");
@@ -131,6 +163,25 @@
                     $(resultShow).text(`Đã Xoá Toàn Bộ Dữ Liệu Kho`);
                 }
 
+            }
+        })
+    })
+
+    $(btnConfig).click(function(){
+        let dataAjax = {
+            passwordLZD: $(passwordLZD).val()
+        }
+        let requestPost = $.ajax({
+            type:"POST",
+            url: '../../api/updateConfig',
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(dataAjax),
+            success: function (result){
+                if (result.success)
+                {
+                    $('#resultConfig').text("Đã cập nhật password lzd")
+                }
             }
         })
     })

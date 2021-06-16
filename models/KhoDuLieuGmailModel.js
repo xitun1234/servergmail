@@ -6,6 +6,7 @@ const KhoDuLieuGmailSchema = new Schema({
     password: {type:String},
     deviceName: {type:String},
     phoneNumber: {type:String},
+    passwordLZD:{type:String},
     fullName: {type:String},
     first_name: {type:String},
     last_name_group: {type:String},

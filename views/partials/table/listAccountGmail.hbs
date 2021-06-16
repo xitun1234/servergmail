@@ -57,7 +57,8 @@
                             <th>Gmail</th>
                             <th>Mật khẩu</th>
                             <th>Thiết bị</th>
-                            <th>SĐT</th>
+                            <th>Khôi Phục LZD</th>
+                            <th>Mật khẩu LZD</th>
                             <th>Trạng thái</th>
                             <th>Thời gian tạo</th>
                         </thead>
@@ -81,13 +82,20 @@
                                     </p>
                                 </td>
 
-                                <td>{{this.phone}}</td>
-
                                 <td>{{this.deviceName}}</td>
+
+                                <td>{{#if this.isRecovery}}
+                                    <p class="text-danger">Đã khôi phục acc</p>
+                                    {{/if}}
+                                </td>
+                                <td>{{#if this.isRecovery}}
+                                    <p class="text-danger">{{this.passwordLZD}}</p>
+                                    {{/if}}
+                                </td>
                                 
                                 <td>
                                     {{#if this.status}}
-                                    <p class="text-success">Đã tạo acc thành công</p>
+                                    <p class="text-success">Tạo Gmail Done</p>
                                     {{else}}
                                     <p class="text-danger">Reg Fail</p>
                                     {{/if}}

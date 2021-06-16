@@ -12,7 +12,7 @@ router.get('/', async function(req, res) {
         ...req.query
     }
     
-    const accounts = await gmailModel.find().exec((err,result)=>{
+    const accounts = await gmailModel.find({status:true}).exec((err,result)=>{
 
         res.render('gmail/account',{
             userData:req.user,
@@ -48,11 +48,11 @@ router.post('/export', async(req,res,next) =>{
             'Mật khẩu': rowExcel.password,
             'SĐT': rowExcel.phoneNumber,
             'Thiết bị tạo': rowExcel.deviceName,
-            'Họ Tên': rowExcel.fullName,
-            'IP': rowExcel.ipAddr,
-            'Backup': rowExcel.isBackUp,
+            'Khôi phục lzd': rowExcel.isRecovery,
+            'Mật khẩu LZD': rowExcel.passwordLZD,
             'Trạng thái': rowExcel.status
           }
+          console.log(dataExtract)
     
           
           if (dataExcel.length == 0) { dataExcel.push(Object.keys(dataExtract)); }
